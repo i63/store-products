@@ -2,6 +2,7 @@ var connection="mongodb://default:default@dharma.mongohq.com:10016/store";
 var Server = require('mongodb').Server,
     db;
 var mongodb = require('mongodb');
+console.log(process.env);
 db = new mongodb.Db(process.env.MONGO_DB, new mongodb.Server(process.env.MONGO_SERVER,process.env.MONGO_PORT, {auto_reconnect:true}), {});
 
 db.open(function(err, p_client) {  
@@ -72,7 +73,6 @@ exports.insertDummyData = function(){
 			console.log(err,result,"products data inserted");	
 		});					
 	});
-    }
-};
+    };
 
 
