@@ -21,4 +21,4 @@ app.listen(8080);
 
 setTimeout(function(){
 	store.insertDummyData();
-},5000);
+},2000);

@@ -1,16 +1,12 @@
-var connection="mongodb://default:default@dharma.mongohq.com:10016/store";
-var Server = require('mongodb').Server,
-    db;
-var mongodb = require('mongodb');
-console.log(process.env);
-db = new mongodb.Db(process.env.MONGO_DB, new mongodb.Server(process.env.MONGO_SERVER,process.env.MONGO_PORT, {auto_reconnect:true}), {});
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://app_user:password@127.0.0.1/store";
+var db=null;
 
-db.open(function(err, p_client) {  
-  db.authenticate(process.env.MONGO_USER, process.env.MONGO_PASSWORD, function(err) {   
-   if (err) console.log(err);      
-   console.log("logggedin");
-  });
-}); 
+MongoClient.connect(url, function(err, dbconnection) {
+    if (err) throw err;
+    db=dbconnection;
+});
+
 
 exports.findById = function(req, res) {    
     var id = parseInt(req.params.id);    
@@ -73,6 +69,4 @@ exports.insertDummyData = function(){
 			console.log(err,result,"products data inserted");	
 		});					
 	});
-    };
-
-
+};
