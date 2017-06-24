@@ -1,5 +1,5 @@
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://app_user:password@127.0.0.1/store";
+var url = process.env.mongo_url;  //"mongodb://app_user:password@127.0.0.1/store"
 var db=null;
 
 MongoClient.connect(url, function(err, dbconnection) {
