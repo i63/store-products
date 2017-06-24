@@ -7,6 +7,7 @@ oc new-app mongodb -l app=mongodb --name=productsdb \
   
 oc new-app https://github.com/i63/store-products --name=products
 
-oc env dc products MONGO_USER=app_user MONGO_PASSWORD=password MONGO_SERVER=productsdb MONGO_PORT=27017 MONGO_DB=store
+oc env dc products MONGO_USER=app_user MONGO_PASSWORD=password MONGO_SERVER=productsdb MONGO_PORT=27017 MONGO_DB=store \
+mongo_url='mongodb://app_user:password@productsdb/store'
 
 ```
