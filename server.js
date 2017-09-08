@@ -17,7 +17,7 @@ app.get('/store/:id', store.findById);
 app.get('/store', store.findAll);
 app.get('/cats', store.getAllCategories);
 
-app.listen(8080);
+app.listen(8081);
 
 setTimeout(function(){
 	store.insertDummyData();

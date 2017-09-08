@@ -1,6 +1,10 @@
 var MongoClient = require('mongodb').MongoClient;
+var request = require('request-json');
+var client = request.createClient('http://localhost:8080');
+
 var url = process.env.mongo_url;  //"mongodb://app_user:password@127.0.0.1/store"
 var db=null;
+console.log(url);
 
 MongoClient.connect(url, function(err, dbconnection) {
     if (err) throw err;
@@ -35,18 +39,22 @@ exports.findBySubCat = function(req, res) {
 };
 
 exports.findAll = function(req, res) {
+    
     var name = req.query["name"];
     db.collection('Products', function(err, collection) {
-        if (name) {
-            collection.find({"fullName": new RegExp(name, "i")}).toArray(function(err, items) {
-                res.jsonp(items);
-            });
-        } else {
-            collection.find().toArray(function(err, items) {
-                res.jsonp(items);
-            });
-        }
+        client.get('/', function(err, res2, body) {
+            if (name) {
+                collection.find({"fullName": new RegExp(name, "i")}).toArray(function(err, items) {
+                    res.jsonp(items.concat(body));
+                });
+            } else {
+                collection.find().toArray(function(err, items) {
+                    res.jsonp(items.concat(body));
+                });
+            }
+        });
     });
+    
 };
 
 exports.insertDummyData = function(){	
