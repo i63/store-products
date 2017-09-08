@@ -1,6 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
 var request = require('request-json');
-var client = request.createClient('http://localhost:8080');
+var client = request.createClient('http://recommendations:8080');
 
 var url = process.env.mongo_url;  //"mongodb://app_user:password@127.0.0.1/store"
 var db=null;
