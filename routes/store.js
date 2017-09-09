@@ -1,6 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
 var request = require('request-json');
-var client = request.createClient('http://recommendations:8080');
+var client = request.createClient('http://recommendations-default.127.0.0.1.nip.io');
 
 var url = process.env.mongo_url;  //"mongodb://app_user:password@127.0.0.1/store"
 var db=null;
@@ -22,7 +22,7 @@ exports.findById = function(req, res) {
     });
 };
 exports.getAllCategories = function(req, res) {  
-	console.log('fetching....');
+	console.log('fetching cats...');
     db.collection('Categories', function(err, collection) {
         collection.find({}).toArray(function(err, items) { 			
 			res.jsonp(items);
@@ -30,10 +30,13 @@ exports.getAllCategories = function(req, res) {
     });
 };
 exports.findBySubCat = function(req, res) {
-    var id = parseInt(req.params.id);    
+    var id = parseInt(req.params.id);
+    console.log('fetching by subCat...');    
     db.collection('Products', function(err, collection) {
-        collection.find({'subCat': id}).toArray(function(err, items) {            
-            res.jsonp(items);
+        collection.find({'subCat': id}).toArray(function(err, items) { 
+            client.get('/', function(err, res2, body) {
+                    res.jsonp(items.concat(body));
+            });
         });
     });
 };
@@ -78,3 +81,8 @@ exports.insertDummyData = function(){
 		});					
 	});
 };
+
+//Handle Cleanup
+process.on('SIGTERM', function () {
+    MongoClient.close();
+});
