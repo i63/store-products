@@ -5,8 +5,7 @@
     "private": true,
     "dependencies": {
         "express": "3.x",
-        "mongodb": "^2.2.29",
-        "request-json": "^0.6.2"
+        "mongodb": "^2.2.29"
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",

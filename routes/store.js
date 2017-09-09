@@ -1,6 +1,5 @@
 var MongoClient = require('mongodb').MongoClient;
 var request = require('request-json');
-var client = request.createClient('http://recommendations:8080');
 
 var url = process.env.mongo_url;  //"mongodb://app_user:password@127.0.0.1/store"
 var db=null;
@@ -34,9 +33,7 @@ exports.findBySubCat = function(req, res) {
     console.log('fetching by subCat...');    
     db.collection('Products', function(err, collection) {
         collection.find({'subCat': id}).toArray(function(err, items) { 
-            client.get('/', function(err, res2, body) {
-                    res.jsonp(items.concat(body));
-            });
+             res.jsonp(items.concat(body));
         });
     });
 };
@@ -45,7 +42,6 @@ exports.findAll = function(req, res) {
     
     var name = req.query["name"];
     db.collection('Products', function(err, collection) {
-        client.get('/', function(err, res2, body) {
             if (name) {
                 collection.find({"fullName": new RegExp(name, "i")}).toArray(function(err, items) {
                     res.jsonp(items.concat(body));
@@ -55,7 +51,6 @@ exports.findAll = function(req, res) {
                     res.jsonp(items.concat(body));
                 });
             }
-        });
     });
     
 };
