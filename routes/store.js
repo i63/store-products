@@ -32,7 +32,7 @@ exports.findBySubCat = function(req, res) {
     console.log('fetching by subCat...');    
     db.collection('Products', function(err, collection) {
         collection.find({'subCat': id}).toArray(function(err, items) { 
-             res.jsonp(items.concat(body));
+             res.jsonp(items);
         });
     });
 };
@@ -43,11 +43,11 @@ exports.findAll = function(req, res) {
     db.collection('Products', function(err, collection) {
             if (name) {
                 collection.find({"fullName": new RegExp(name, "i")}).toArray(function(err, items) {
-                    res.jsonp(items.concat(body));
+                    res.jsonp(items);
                 });
             } else {
                 collection.find().toArray(function(err, items) {
-                    res.jsonp(items.concat(body));
+                    res.jsonp(items);
                 });
             }
     });
