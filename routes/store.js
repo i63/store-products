@@ -35,7 +35,10 @@ exports.findBySubCat = function(req, res) {
     db.collection('Products', function(err, collection) {
         collection.find({'subCat': id}).toArray(function(err, items) { 
             client.get('/', function(err, res2, body) {
-                    res.jsonp(items.concat(body));
+                if(err)
+                res.jsonp(items)
+                else
+                res.jsonp(items.concat(body));
             });
         });
     });
