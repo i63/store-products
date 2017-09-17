@@ -31,14 +31,19 @@ exports.getAllCategories = function(req, res) {
 };
 exports.findBySubCat = function(req, res) {
     var id = parseInt(req.params.id);
-    console.log('fetching by subCat...');    
+    console.log('fetching by subCat...'+id);    
     db.collection('Products', function(err, collection) {
         collection.find({'subCat': id}).toArray(function(err, items) { 
             client.get('/', function(err, res2, body) {
-                if(err)
-                res.jsonp(items)
-                else
-                res.jsonp(items.concat(body));
+                console.log("recco",err,body);
+                if(err){
+                  console.log('recommendations failed');
+                  res.jsonp(items)
+                }
+                else{
+                  console.log('recommendations fetched');
+                  res.jsonp(items.concat(body));
+                }
             });
         });
     });
