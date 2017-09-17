@@ -31,7 +31,8 @@ exports.getAllCategories = function(req, res) {
 };
 exports.findBySubCat = function(req, res) {
     var id = parseInt(req.params.id);
-    console.log('fetching by subCat...'+id);    
+    console.log('fetching by subCat...'+id); 
+    console.log('headers',req.headers);   
     db.collection('Products', function(err, collection) {
         collection.find({'subCat': id}).toArray(function(err, items) { 
             client.get('/', function(err, res2, body) {
