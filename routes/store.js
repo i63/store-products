@@ -35,7 +35,14 @@ exports.findBySubCat = function(req, res) {
     console.log('headers',req.headers);   
     db.collection('Products', function(err, collection) {
         collection.find({'subCat': id}).toArray(function(err, items) { 
-            //client.headers=req.headers;
+            client.headers['x-request-id']=req.headers['x-request-id'];
+            client.headers['x-b3-traceid']=req.headers['x-b3-traceid'];
+            client.headers['x-b3-spanid']=req.headers['x-b3-spanid'];
+            client.headers['x-b3-parentspanid']=req.headers['x-b3-parentspanid'];
+            client.headers['x-b3-sampled']=req.headers['x-b3-sampled'];
+            client.headers['x-b3-flags']=req.headers['x-b3-flags'];
+            client.headers['x-ot-span-context']=req.headers['x-ot-span-context'];
+            client.headers['cookie']=req.headers['cookie'];
             client.get('/', function(err, res2, body) {
                 console.log("recco",err,body);
                 if(err){
