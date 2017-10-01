@@ -35,6 +35,7 @@ exports.findBySubCat = function(req, res) {
     console.log('headers',req.headers);   
     db.collection('Products', function(err, collection) {
         collection.find({'subCat': id}).toArray(function(err, items) { 
+            client.headers=req.headers;
             client.get('/', function(err, res2, body) {
                 console.log("recco",err,body);
                 if(err){
@@ -54,6 +55,7 @@ exports.findAll = function(req, res) {
     
     var name = req.query["name"];
     db.collection('Products', function(err, collection) {
+        client.headers=req.headers;
         client.get('/', function(err, res2, body) {
             if (name) {
                 collection.find({"fullName": new RegExp(name, "i")}).toArray(function(err, items) {
