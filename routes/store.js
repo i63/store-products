@@ -44,10 +44,25 @@ exports.findBySubCat = function(req, res) {
             client.headers['x-ot-span-context']=req.headers['x-ot-span-context'];
             client.headers['cookie']=req.headers['cookie'];
             client.get('/', function(err, res2, body) {
-                console.log("recco",err,body);
+                console.log("recco",err,res2,body);
                 if(err){
-                  console.log('recommendations failed');
-                  res.jsonp(items)
+                  console.log('recco failed');
+                  var dummyProduct={
+                    "product_id": res2.statusCode,"name": "ERROR: "+res2.statusCode,
+                    "title": "",
+                    "img": "",
+                    "images": [
+                    ""
+                    ],
+                    "documents": "",
+                    "features": "",
+                    "shipping": 0,
+                    "caption": "",
+                    "price": 0,
+                    "subCat": 1,
+                    "recommended":"true"
+                  } 
+                  res.jsonp(items.concat(dummyProduct))
                 }
                 else{
                   console.log('recommendations fetched');
