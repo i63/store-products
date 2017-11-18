@@ -20,14 +20,19 @@ podTemplate(label: 's2i-demo',
       MONGODB_ADMIN_PASSWORD = "password"
     }
 
-    stage('unit testing') {
-      
-      container('mongo'){
-        sh 'MONGODB_ADMIN_PASSWORD=password mongod --fork --logpath /var/log/mongodb.log'
-      }
-      container('nodejs'){ 
-        sh 'npm install'
-        sh 'mongo_url=mongodb://root@127.0.0.1/store npm test'
+    stage('build and test') {
+      parallel{
+        stage('run mongo'){
+          container('mongo'){
+            sh 'MONGODB_ADMIN_PASSWORD=password mongod'
+          }
+        }
+        stage('install and test') { 
+          container('nodejs'){ 
+            sh 'npm install'
+            sh 'mongo_url=mongodb://root@127.0.0.1/store npm test'
+          }
+        }
       }
     }
 
