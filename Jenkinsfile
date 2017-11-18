@@ -1,6 +1,7 @@
 podTemplate(label: 's2i-demo',
   cloud: 'openshift',
   containers: [
+    containerTemplate(name: 'mongo',privileged: false, image: 'mongo', ttyEnabled: true, command: 'cat'),
     containerTemplate(name: 'nodejs',privileged: false, image: 'node:4.8.6-alpine', ttyEnabled: true, command: 'cat'),
   	containerTemplate(name: 's2i',privileged: false, image: 'debianmaster/s2i', ttyEnabled: true, command: 'cat'),
   	containerTemplate(name: 'docker',privileged: false, image: 'docker:1.11', ttyEnabled: true, command: 'cat')
@@ -15,6 +16,9 @@ podTemplate(label: 's2i-demo',
     checkout scm
 
     stage('unit testing') {
+      container('mongo'){
+        sh 'MONGODB_ADMIN_PASSWORD=password mongod'
+      }
       container('nodejs'){
         sh 'npm install'
         sh 'npm test'
@@ -30,6 +34,6 @@ podTemplate(label: 's2i-demo',
       	sh "docker push ${image}"
       }
     }
-    
+
   }
 }
