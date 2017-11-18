@@ -21,7 +21,7 @@ podTemplate(label: 's2i-demo',
       MONGODB_ADMIN_PASSWORD = "password"
     }
 
-    
+    /*
     stage('unit testing') {
       parallel(
         'Spinup Mongo': {
@@ -38,7 +38,7 @@ podTemplate(label: 's2i-demo',
         }
       )
     }
-    
+    */
     stage('Build Docker image') {
       container('s2i') {
         sh "s2i build . centos/nodejs-6-centos7 ${image}"
