@@ -24,7 +24,7 @@ podTemplate(label: 's2i-demo',
       when {
         branch 'master'
       }
-      failFast true
+      //failFast true
       parallel {
         stage('stand up mongodb') {
           steps{
