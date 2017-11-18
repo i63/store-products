@@ -33,7 +33,7 @@ podTemplate(label: 's2i-demo',
             sh 'mongo_url=mongodb://root@127.0.0.1/store npm test'
           }
         }
-      }
+      )
     }
 
     stage('Build Docker image') {
