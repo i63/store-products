@@ -7,7 +7,7 @@ podTemplate(label: 's2i-demo',
   	containerTemplate(name: 'docker',privileged: false, image: 'docker:1.11', ttyEnabled: true, command: 'cat')
   ],
   volumes: [
-      secretVolume(secretName: 'docker-reg', mountPath: '/root/.docker')
+      secretVolume(secretName: 'docker-reg', mountPath: '/root/.docker'),
     	hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
       emptyDirVolume(mountPath: '/data/db', memory: false)
     ]
