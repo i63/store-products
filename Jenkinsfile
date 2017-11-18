@@ -26,7 +26,7 @@ podTemplate(label: 's2i-demo',
           container('mongo'){
             sh 'mongod'
           }
-        }
+        },
         'Build and test': {
           container('nodejs'){
             sh 'npm install'
