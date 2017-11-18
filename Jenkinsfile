@@ -1,6 +1,7 @@
 podTemplate(label: 's2i-demo',
   cloud: 'openshift',
   containers: [
+    containerTemplate(name: 'nodejs',privileged: false, image: '4.8.6-alpine', ttyEnabled: true, command: 'cat'),
   	containerTemplate(name: 's2i',privileged: false, image: 'debianmaster/s2i', ttyEnabled: true, command: 'cat'),
   	containerTemplate(name: 'docker',privileged: false, image: 'docker:1.11', ttyEnabled: true, command: 'cat')
   ],
@@ -13,7 +14,9 @@ podTemplate(label: 's2i-demo',
   node('s2i-demo') {
 
     stage('unit testing') {
-      sh 'npm test'
+      container('nodejs'){
+        sh 'npm test'
+      }
     }
 
     stage('Build Docker image') {
