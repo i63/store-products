@@ -21,27 +21,24 @@ podTemplate(label: 's2i-demo',
     }
 
     stage('unit testing') {
-      when {
-        branch 'master'
-      }
-      //failFast true
-      parallel {
-        stage('stand up mongodb') {
-          steps{
-            container('mongo'){
-              sh 'MONGODB_ADMIN_PASSWORD=password mongod'
+                  parallel {
+                stage('Branch A') {
+                    agent {
+                        label "for-branch-a"
+                    }
+                    steps {
+                        echo "On Branch A"
+                    }
+                }
+                stage('Branch B') {
+                    agent {
+                        label "for-branch-b"
+                    }
+                    steps {
+                        echo "On Branch B"
+                    }
+                }
             }
-          }
-        }
-        stage('install and test products api') {
-          steps{
-            container('nodejs'){
-              sh 'npm install'
-              sh 'mongo_url=mongodb://root@127.0.0.1/store npm test'
-            }
-          }
-        }
-      }
     }
 
     stage('Build Docker image') {
