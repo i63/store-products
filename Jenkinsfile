@@ -23,7 +23,7 @@ podTemplate(label: 's2i-demo',
     stage('unit testing') {
       
       container('mongo'){
-        sh 'nohup MONGODB_ADMIN_PASSWORD=password mongod &&'
+        sh 'mongod'
       }
       container('nodejs'){
         sh 'npm install'
