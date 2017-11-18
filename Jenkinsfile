@@ -15,6 +15,7 @@ podTemplate(label: 's2i-demo',
 
     stage('unit testing') {
       container('nodejs'){
+        sh 'npm install'
         sh 'npm test'
       }
     }
