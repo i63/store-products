@@ -39,7 +39,8 @@ podTemplate(label: 's2i-demo',
     */
     stage('Build Docker image') {
       container('s2i') {
-        sh "s2i build . centos/nodejs-6-centos7 ${image}"
+        sh 'sleep 300'
+        //sh "s2i build . centos/nodejs-6-centos7 ${image}"
       }
       container('docker') {
       	sh "docker login -u debianmaster -p mypass"
