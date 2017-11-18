@@ -7,6 +7,7 @@ podTemplate(label: 's2i-demo',
   	containerTemplate(name: 'docker',privileged: false, image: 'docker:1.11', ttyEnabled: true, command: 'cat')
   ],
   volumes: [
+      secretVolume(secretName: 'docker-reg', mountPath: '/root/.docker')
     	hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
       emptyDirVolume(mountPath: '/data/db', memory: false)
     ]
@@ -43,7 +44,6 @@ podTemplate(label: 's2i-demo',
         sh "s2i build . centos/nodejs-6-centos7 ${image}"
       }
       container('docker') {
-      	sh "docker login -u debianmaster -p mypass"
       	sh "docker push ${image}"
       }
     }
