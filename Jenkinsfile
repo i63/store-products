@@ -41,6 +41,7 @@ podTemplate(label: 's2i-demo',
     */
     stage('Build Docker image') {
       container('s2i') {
+        sh 'sheel 300'
         sh "s2i build . centos/nodejs-6-centos7 ${image}"
       }
       container('docker') {
