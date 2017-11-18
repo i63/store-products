@@ -6,6 +6,7 @@ var req=null;
 before(function() {
     req = request('http://localhost:8080');
 });
+
 describe('Test products API', function() {
     it('products service should be healthy', function(done) {
        req
@@ -22,6 +23,7 @@ describe('Test products API', function() {
         })
     });
 });
+
 after(function() {
     process.exit();
 });
