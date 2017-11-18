@@ -11,6 +11,11 @@ podTemplate(label: 's2i-demo',
   ) {
   def image = "debianmaster/store-products"
   node('s2i-demo') {
+
+    stage('unit testing') {
+      sh 'npm test'
+    }
+
     stage('Build Docker image') {
       checkout scm
       container('s2i') {
