@@ -21,24 +21,16 @@ podTemplate(label: 's2i-demo',
     }
 
     stage('unit testing') {
-                  parallel {
-                stage('Branch A') {
-                    agent {
-                        label "for-branch-a"
-                    }
-                    steps {
-                        echo "On Branch A"
-                    }
-                }
-                stage('Branch B') {
-                    agent {
-                        label "for-branch-b"
-                    }
-                    steps {
-                        echo "On Branch B"
-                    }
-                }
-            }
+      when {
+        branch 'master'
+      }
+      container('mongo'){
+        sh 'MONGODB_ADMIN_PASSWORD=password mongod --fork --logpath /var/log/mongodb.log'
+      }
+      container('nodejs'){
+        sh 'npm install'
+        sh 'mongo_url=mongodb://root@127.0.0.1/store npm test'
+      }
     }
 
     stage('Build Docker image') {
