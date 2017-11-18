@@ -25,7 +25,7 @@ podTemplate(label: 's2i-demo',
       container('mongo'){
         sh 'MONGODB_ADMIN_PASSWORD=password mongod --fork --logpath /var/log/mongodb.log'
       }
-      container('nodejs'){
+      container('nodejs'){ 
         sh 'npm install'
         sh 'mongo_url=mongodb://root@127.0.0.1/store npm test'
       }
