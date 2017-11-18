@@ -21,9 +21,7 @@ podTemplate(label: 's2i-demo',
     }
 
     stage('unit testing') {
-      when {
-        branch 'master'
-      }
+      
       container('mongo'){
         sh 'MONGODB_ADMIN_PASSWORD=password mongod --fork --logpath /var/log/mongodb.log'
       }
