@@ -29,3 +29,12 @@ module.exports={
     app: app,
     store: store
 }
+
+//Handle Cleanup
+process.on('SIGTERM', function () {
+    console.log('Closing connection');
+    store.db.close();
+    setTimeout(function(){
+        process.exit(0);
+    },2000);
+});

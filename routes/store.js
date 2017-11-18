@@ -7,6 +7,7 @@ console.log(url);
 MongoClient.connect(url, function(err, dbconnection) {
     if (err) throw err;
     db=dbconnection;
+    exports.db=db;
 });
 
 
@@ -76,11 +77,4 @@ exports.insertDummyData = function(){
 	});
 };
 
-//Handle Cleanup
-process.on('SIGTERM', function () {
-    console.log('Closing connection');
-    db.close();
-    setTimeout(function(){
-        process.exit(0);
-    },2000);
-});
+
