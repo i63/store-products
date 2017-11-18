@@ -24,13 +24,18 @@ podTemplate(label: 's2i-demo',
       when {
         branch 'master'
       }
+      failFast true
       parallel {
-        container('mongo'){
-          sh 'MONGODB_ADMIN_PASSWORD=password mongod'
+        stage('stand up mongodb') {
+          container('mongo'){
+            sh 'MONGODB_ADMIN_PASSWORD=password mongod'
+          }
         }
-        container('nodejs'){
-          sh 'npm install'
-          sh 'mongo_url=mongodb://root@127.0.0.1/store npm test'
+        stage('install and test products api') {
+          container('nodejs'){
+            sh 'npm install'
+            sh 'mongo_url=mongodb://root@127.0.0.1/store npm test'
+          }
         }
       }
     }
