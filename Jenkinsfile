@@ -13,15 +13,25 @@ podTemplate(label: 's2i-demo',
   ) {
   def image = "debianmaster/store-products"
   node('s2i-demo') {
+
     checkout scm
+    environment {
+      mongo_url = "mongodb://root@127.0.0.1/store"
+      MONGODB_ADMIN_PASSWORD = "password"
+    }
 
     stage('unit testing') {
-      container('mongo'){
-        sh 'MONGODB_ADMIN_PASSWORD=password mongod --fork --logpath /var/log/mongodb.log'
+      when {
+        branch 'master'
       }
-      container('nodejs'){
-        sh 'npm install'
-        sh 'mongo_url=mongodb://root@127.0.0.1/store npm test'
+      parallel {
+        container('mongo'){
+          sh 'MONGODB_ADMIN_PASSWORD=password mongod'
+        }
+        container('nodejs'){
+          sh 'npm install'
+          sh 'mongo_url=mongodb://root@127.0.0.1/store npm test'
+        }
       }
     }
 
@@ -32,6 +42,13 @@ podTemplate(label: 's2i-demo',
       container('docker') {
       	sh "docker login -u debianmaster -p mypass"
       	sh "docker push ${image}"
+      }
+    }
+
+    post {
+      failure {
+        // notify users when the Pipeline fails
+        
       }
     }
 
