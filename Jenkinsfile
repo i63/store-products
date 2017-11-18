@@ -17,7 +17,7 @@ podTemplate(label: 's2i-demo',
 
     stage('unit testing') {
       container('mongo'){
-        sh 'MONGODB_ADMIN_PASSWORD=password mongod'
+        sh 'MONGODB_ADMIN_PASSWORD=password mongod --fork'
       }
       container('nodejs'){
         sh 'npm install'
