@@ -23,6 +23,7 @@ podTemplate(label: 's2i-demo',
     stage('build and test') {
       parallel{
         stage('run mongo'){
+          agent any
           steps{
             container('mongo'){
               sh 'MONGODB_ADMIN_PASSWORD=password mongod'
@@ -31,6 +32,7 @@ podTemplate(label: 's2i-demo',
         }
         stage('install and test') { 
           steps{
+            agent any
             container('nodejs'){ 
               sh 'npm install'
               sh 'mongo_url=mongodb://root@127.0.0.1/store npm test'
