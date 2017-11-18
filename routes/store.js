@@ -78,5 +78,9 @@ exports.insertDummyData = function(){
 
 //Handle Cleanup
 process.on('SIGTERM', function () {
-    MongoClient.close();
+    console.log('Closing connection');
+    db.close();
+    setTimeout(function(){
+        process.exit(0);
+    },2000);
 });

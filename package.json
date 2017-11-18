@@ -5,10 +5,15 @@
     "private": true,
     "dependencies": {
         "express": "3.x",
-        "mongodb": "^2.2.29"
+        "mongodb": "^2.2.29",
+        "supertest": "^3.0.0"
     },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "mocha tests/test.js",
         "start": "node server.js"
+    },
+    "devDependencies": {
+        "chai": "^4.1.2",
+        "mocha": "^4.0.1"
     }
 }
