@@ -17,11 +17,11 @@ mongo_url='mongodb://app_user:password@productsdb/store'
 > config.json
 ```json
 {
-	"auths": {
-		"https://index.docker.io/v1/": {
-			"auth": "base64encoded_password_here"
-		}
-	}
+  "auths": {
+     "https://index.docker.io/v1/": {
+		"auth": "base64encoded_password_here" 
+     }
+  }
 }    
 ```
 ```
