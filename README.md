@@ -25,7 +25,7 @@ mongo_url='mongodb://app_user:password@productsdb/store'
 }    
 ```
 ```
-k create secret generic docker-reg --from-file=config.json
+kubectl create secret generic docker-reg --from-file=config.json
 ```
 
 > Build pod needs to mount secret at /root/.docker/config.json
