@@ -14,15 +14,16 @@ mongo_url='mongodb://app_user:password@productsdb/store'
 
 
 ## CI-CD
-> config.json
-```json
+```
+cat > config.json <<EOF
 {
   "auths": {
      "https://index.docker.io/v1/": {
 		"auth": "base64encoded_password_here" 
      }
   }
-}    
+} 
+EOF
 ```
 ```
 kubectl create secret generic docker-reg --from-file=config.json
