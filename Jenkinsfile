@@ -7,7 +7,7 @@ podTemplate(label: 's2i-demo',
   	containerTemplate(name: 'docker',privileged: false, image: 'docker:1.11', ttyEnabled: true, command: 'cat')
   ],
   volumes: [
-      secretVolume(secretName: 'docker-reg', mountPath: '/root/.docker'),
+      secretVolume(secretName: 'docker-reg', mountPath: '/home/henkins'),
     	hostPathVolume(hostPath: '/var/run/docker.sock', mountPath: '/var/run/docker.sock'),
       emptyDirVolume(mountPath: '/data/db', memory: false)
     ]
@@ -15,13 +15,14 @@ podTemplate(label: 's2i-demo',
   def image = "debianmaster/store-products"
   node('s2i-demo') {
 
-    checkout scm
+    git 'https://github.com/debianmaster/store-products'
+    //checkout scm
     environment {
       mongo_url = "mongodb://root@127.0.0.1/store"
       MONGODB_ADMIN_PASSWORD = "password"
     }
 
-    /*
+    
     stage('unit testing') {
       parallel(
         'Spinup Mongo': {
@@ -38,10 +39,10 @@ podTemplate(label: 's2i-demo',
         }
       )
     }
-    */
+    
     stage('Build Docker image') {
       container('s2i') {
-        sh 'sleep 300'
+        //sh 'sleep 300'
         sh "s2i build . centos/nodejs-6-centos7 ${image}"
       }
       container('docker') {
