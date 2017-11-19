@@ -11,3 +11,21 @@ oc env dc products MONGO_USER=app_user MONGO_PASSWORD=password MONGO_SERVER=prod
 mongo_url='mongodb://app_user:password@productsdb/store'
 
 ```
+
+
+## CI-CD
+> config.json
+```json
+{
+	"auths": {
+		"https://index.docker.io/v1/": {
+			"auth": "base64encoded_password_here"
+		}
+	}
+}    
+```
+```
+k create secret generic docker-reg --from-file=config.json
+```
+
+> Build pod needs to mount secret at /root/.docker/config.json
