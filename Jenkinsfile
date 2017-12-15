@@ -20,7 +20,8 @@ podTemplate(label: 's2i-demo',
   def image = "debianmaster/store-products:${BUILD_NUMBER}"
   node('s2i-demo') {
 
-    git 'https://github.com/debianmaster/store-products'
+    git 'https://github.com/debianmaster/store-products.git'
+
     //checkout scm
     environment {
       mongo_url = "mongodb://root@127.0.0.1/store"
@@ -59,10 +60,6 @@ podTemplate(label: 's2i-demo',
       }
     }
 
-    //deploy into dev 
-    stage('Deploy to DEV') {
-
-    }
 
     //deploy into dev 
     stage('Deploy to DEV') {
